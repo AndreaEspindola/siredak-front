@@ -1,10 +1,16 @@
-function App() {
+import Main from "./layout/Main";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+function App() {
   return (
     <>
-        <div
-            className="w-24 h-32 mx-auto bg-blue-300">
-                ola</div>   
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Main/>}>
+                    {/* <Route index element={}/> */}
+                </Route>    
+            </Routes>
+        </BrowserRouter>
     </>
   );
 }

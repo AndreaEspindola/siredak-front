@@ -1,9 +1,17 @@
 /** @type {import('tailwindcss').Config} */
-export default {
-  content: ["./src/**/*.jsx"],
+// Link for Material Tailwind :]
+// https://www.material-tailwind.com
+
+const withMT = require("@material-tailwind/react/utils/withMT");
+ 
+module.exports = withMT({
+  content: ["./index.html", "./src/**/*.jsx"],
   theme: {
+    colors: {
+      "green": "#d9f99d",
+      "violet": "#4c1d95"
+    },
     extend: {},
   },
   plugins: [],
-}
-
+});
