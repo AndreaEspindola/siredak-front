@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Card, Typography } from "@material-tailwind/react";
 import { IconButton, Menu, MenuHandler, MenuItem, MenuList } from "@material-tailwind/react";
 import { FiChevronDown } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
  
 const TABLE_HEAD = ["ID Usuario", "E-Mail", "Nombre", "Apellido Paterno", "CURP", "RFC", "ARCO"];
- 
 const TABLE_ROWS = [
     {
         name: "John Michael",
@@ -35,19 +35,25 @@ const TABLE_ROWS = [
 ];
  
 const Table = ({datas}) => {
+    // Este es un hook que regresa dos valores, una variable y una función setter para cambiar
+    // el valor de la variable. En cuanto el valor de la variable cambia el componente se va a
+    // reenderizar.
     const [data, setData] = useState(datas);
+    // Este hook es de react-router. Sirve para cambiar la dirección de la barra de navegación.
+    // Tiene la sintaxis de: navigate("/Dirección-a-la-que-se-quiere-navegar");
+    const navigate = useNavigate();
 
     return (
-        <Card className="overflow-scroll h-full w-full mt-10">
+        <Card className="overflow-scroll h-full w-full mt-24">
         <table className="w-full min-w-max table-auto text-left">
             <thead>
             <tr>
                 {TABLE_HEAD.map((head) => (
                 <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
                     <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal leading-none opacity-70"
                     >
                     {head}
                     </Typography>
@@ -101,7 +107,7 @@ const Table = ({datas}) => {
                                 </IconButton>
                             </MenuHandler>
                             <MenuList>
-                                <MenuItem>Acceso</MenuItem>
+                                <MenuItem onClick={() => navigate("/access")}>Acceso</MenuItem>
                                 <MenuItem>Rectificación</MenuItem>
                                 <MenuItem>Cancelación</MenuItem>
                                 <MenuItem>Oposición</MenuItem>
