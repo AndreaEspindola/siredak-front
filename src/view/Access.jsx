@@ -1,17 +1,25 @@
-const Access = ({data}) => {
-    // const {
-    //     name,
-    //     lastName, 
-    //     birthday, 
-    //     nationality,
-    //     state,
-    //     curp,
-    //     cellphone,
-    //     email,
-    //     is_client,
-    //     gender
-    // } = data;
+import{useState, useEffect} from "react";
 
+const ReportBtn = () => {
+    const [data, setData] = useState(null);
+    const onClick = async () => {
+        const xd = await fetch("https://siredak.herokuapp.com/clients").
+        then(res => res.json()).
+        then(res => console.log(res))
+        setData(xd);
+    }
+
+
+    return(
+        <div className="w-full h-fit flex justify-end">
+            <button onClick={onClick} className="w-1/4 h-10 rounded-xl p-2 transition duration-500 delay-75 ease-in-out hover:scale-105 hover:shadow-xl hover:text-white bg-violet">
+                Generar Reporte
+            </button>
+        </div>
+    );
+}
+
+const Access = ({data}) => {
     return (
         <div className="w-1/2 h-full mx-auto p-2 rounded-md bg-gray-100 mt-10 shadow-xl">
             <p className="ml-8 text-3xl"><span className="text-3xl text-orange-800">Acceso</span>-Chaneke Espejel</p>
@@ -31,6 +39,8 @@ const Access = ({data}) => {
             <p className="ml-8">yo@gmial.com</p>
             <label className="font-bold ml-8">Genero</label>
             <p className="ml-8">M</p>
+
+            <ReportBtn/>
         </div>
     );
 }

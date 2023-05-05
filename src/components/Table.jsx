@@ -5,7 +5,6 @@ import { IconButton, Menu, MenuHandler, MenuItem, MenuList } from "@material-tai
 import { FiChevronDown } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
- 
 const TABLE_HEAD = ["ID Usuario", "E-Mail", "Nombre", "Apellido Paterno", "CURP", "RFC", "ARCO"];
 const TABLE_ROWS = [
     {
@@ -111,7 +110,7 @@ const Table = ({datas}) => {
                             </MenuHandler>
                             <MenuList>
                                 <MenuItem onClick={() => {navigate("/access"); setActive(true)}}>Acceso</MenuItem>
-                                <MenuItem>Rectificación</MenuItem>
+                                <MenuItem onClick={() => {navigate("/rectification"); setActive(true)}}>Rectificación</MenuItem>
                                 <MenuItem>Cancelación</MenuItem>
                                 <MenuItem>Oposición</MenuItem>
                             </MenuList>
