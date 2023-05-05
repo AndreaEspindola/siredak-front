@@ -9,6 +9,7 @@ module.exports = withMT({
   theme: {
     colors: {
       "green": "#d9f99d",
+      "green-tupper": "#22c55e",
       "violet": "#4c1d95"
     },
     extend: {},
