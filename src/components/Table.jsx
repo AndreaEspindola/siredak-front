@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { BackContext } from "../context/BackContext";
 import { Card, Typography } from "@material-tailwind/react";
 import { IconButton, Menu, MenuHandler, MenuItem, MenuList } from "@material-tailwind/react";
 import { FiChevronDown } from "react-icons/fi";
@@ -42,6 +43,8 @@ const Table = ({datas}) => {
     // Este hook es de react-router. Sirve para cambiar la dirección de la barra de navegación.
     // Tiene la sintaxis de: navigate("/Dirección-a-la-que-se-quiere-navegar");
     const navigate = useNavigate();
+    // 
+    const {setActive} = useContext(BackContext);
 
     return (
         <Card className="overflow-scroll h-full w-full mt-24">
@@ -107,7 +110,7 @@ const Table = ({datas}) => {
                                 </IconButton>
                             </MenuHandler>
                             <MenuList>
-                                <MenuItem onClick={() => navigate("/access")}>Acceso</MenuItem>
+                                <MenuItem onClick={() => {navigate("/access"); setActive(true)}}>Acceso</MenuItem>
                                 <MenuItem>Rectificación</MenuItem>
                                 <MenuItem>Cancelación</MenuItem>
                                 <MenuItem>Oposición</MenuItem>
