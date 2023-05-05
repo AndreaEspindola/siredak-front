@@ -7,8 +7,6 @@ const Home = () => {
     // reenderizar.
     const [data, setData] = useState(null);
 
-    console.log(data)
-
     useEffect(() => {
         const fetchData = async() => {
             await fetch("https://siredak.herokuapp.com/clients").

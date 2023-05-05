@@ -46,8 +46,7 @@ const Table = ({data}) => {
                     </tr>
                 </thead>
                 <tbody>
-                {/* Desestructurar los datos que me mande renet y asignarlos a cada campo */}
-                {data.map(({name, lastName, email, cellphone, nationality, state, curp, gender, id_clients}, index) => {
+                {data.map(({name, lastName, email, cellphone, nationality, state, curp, gender, id_clients, birthday}, index) => {
                     const isLast = index === TABLE_ROWS.length - 1;
                     const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
         
@@ -106,7 +105,7 @@ const Table = ({data}) => {
                                     </IconButton>
                                 </MenuHandler>
                                 <MenuList>
-                                    <MenuItem onClick={() => {navigate("/access"); setActive(true)}}>Acceso</MenuItem>
+                                    <MenuItem onClick={() => {navigate("/access", {state: {name, lastName, email, cellphone, nationality, state, curp, gender, id_clients, birthday}}); setActive(true)}}>Acceso</MenuItem>
                                     <MenuItem onClick={() => {navigate("/rectification"); setActive(true)}}>Rectificación</MenuItem>
                                     <MenuItem>Cancelación</MenuItem>
                                     <MenuItem>Oposición</MenuItem>
