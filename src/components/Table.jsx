@@ -14,6 +14,7 @@ const Table = ({data}) => {
     // Tiene la sintaxis de: navigate("/Dirección-a-la-que-se-quiere-navegar");
     const navigate = useNavigate();
     const {setActive} = useContext(BackContext);
+    const [msg, setMsg] = useState(null);
 
     const getGender = (gender) => {
         const map = new Map([
@@ -24,7 +25,7 @@ const Table = ({data}) => {
 
         return map.get(gender);
     }
-
+    console.log(data)
     return (
         <>
             {data? (
@@ -49,71 +50,75 @@ const Table = ({data}) => {
                 {data.map(({name, lastName, email, cellphone, nationality, state, curp, gender, id_clients, birthday}, index) => {
                     const isLast = index === TABLE_ROWS.length - 1;
                     const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
-        
-                    return (
-                    <tr key={id_clients}>
-                        <td className={classes}>
-                            <Typography variant="small" color="blue-gray" className="font-normal">
-                                {id_clients}
-                            </Typography>
-                        </td>
-                        <td className={classes}>
-                            <Typography variant="small" color="blue-gray" className="font-normal">
-                                {email}
-                            </Typography>
-                        </td>
-                        <td className={classes}>
-                            <Typography variant="small" color="blue-gray" className="font-normal">
-                                {name}
-                            </Typography>
-                        </td>
-                        <td className={classes}>
-                            <Typography variant="small" color="blue-gray" className="font-normal">
-                               {lastName}
-                            </Typography>
-                        </td>
-                        <td className={classes}>
-                            <Typography variant="small" color="blue-gray" className="font-normal">
-                                {curp}
-                            </Typography>
-                        </td>
-                        <td className={classes}>
-                            <Typography variant="small" color="blue-gray" className="font-normal">
-                                {cellphone}
-                            </Typography>
-                        </td>
-                        <td className={classes}>
-                            <Typography variant="small" color="blue-gray" className="font-normal">
-                                {nationality}
-                            </Typography>
-                        </td>
-                        <td className={classes}>
-                            <Typography variant="small" color="blue-gray" className="font-normal">
-                                {state}
-                            </Typography>
-                        </td>
-                        <td className={classes}>
-                            <Typography variant="small" color="blue-gray" className="font-normal">
-                                {getGender(gender)}
-                            </Typography>
-                        </td>
-                        <td className="p-4">
-                            <Menu placement="right-start">
-                                <MenuHandler>
-                                    <IconButton>
-                                        <FiChevronDown/>
-                                    </IconButton>
-                                </MenuHandler>
-                                <MenuList>
-                                    <MenuItem onClick={() => {navigate("/access", {state: {name, lastName, email, cellphone, nationality, state, curp, gender, id_clients, birthday}}); setActive(true)}}>Acceso</MenuItem>
-                                    <MenuItem onClick={() => {navigate("/rectification"); setActive(true)}}>Rectificación</MenuItem>
-                                    <MenuItem>Cancelación</MenuItem>
-                                    <MenuItem>Oposición</MenuItem>
-                                </MenuList>
-                            </Menu>
-                        </td>
-                    </tr>
-                    );
+
+                    if(!(name === "" || name === null)){
+                        return (
+                        <tr key={id_clients}>
+                            <td className={classes}>
+                                <Typography variant="small" color="blue-gray" className="font-normal">
+                                    {id_clients}
+                                </Typography>
+                            </td>
+                            <td className={classes}>
+                                <Typography variant="small" color="blue-gray" className="font-normal">
+                                    {email}
+                                </Typography>
+                            </td>
+                            <td className={classes}>
+                                <Typography variant="small" color="blue-gray" className="font-normal">
+                                    {name}
+                                </Typography>
+                            </td>
+                            <td className={classes}>
+                                <Typography variant="small" color="blue-gray" className="font-normal">
+                                   {lastName}
+                                </Typography>
+                            </td>
+                            <td className={classes}>
+                                <Typography variant="small" color="blue-gray" className="font-normal">
+                                    {curp}
+                                </Typography>
+                            </td>
+                            <td className={classes}>
+                                <Typography variant="small" color="blue-gray" className="font-normal">
+                                    {cellphone}
+                                </Typography>
+                            </td>
+                            <td className={classes}>
+                                <Typography variant="small" color="blue-gray" className="font-normal">
+                                    {nationality}
+                                </Typography>
+                            </td>
+                            <td className={classes}>
+                                <Typography variant="small" color="blue-gray" className="font-normal">
+                                    {state}
+                                </Typography>
+                            </td>
+                            <td className={classes}>
+                                <Typography variant="small" color="blue-gray" className="font-normal">
+                                    {getGender(gender)}
+                                </Typography>
+                            </td>
+                            <td className="p-4">
+                                <Menu placement="right-start">
+                                    <MenuHandler>
+                                        <IconButton>
+                                            <FiChevronDown/>
+                                        </IconButton>
+                                    </MenuHandler>
+                                    <MenuList>
+                                        <MenuItem onClick={() => {navigate("/access", {state: {name, lastName, email, cellphone, nationality, state, curp, gender, id_clients, birthday}}); setActive(true)}}>Acceso</MenuItem>
+                                        <MenuItem onClick={() => {navigate("/rectification"); setActive(true)}}>Rectificación</MenuItem>
+                                        <MenuItem onClick={async() => {await fetch(`https://siredak.herokuapp.com/clients/${id_clients}`, {method: "DELETE"}).then(res => res.json()).then(dat => {setMsg(dat);console.log(msg)})}}>Cancelación</MenuItem>
+                                        <MenuItem>Oposición</MenuItem>
+                                    </MenuList>
+                                </Menu>
+                            </td>
+                        </tr>
+                        );
+                    }else{
+                        return null;
+                    }
                 })}
                 </tbody>
             </table>
