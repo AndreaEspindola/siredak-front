@@ -12,7 +12,6 @@ const ReportBtn = () => {
 
 const Access = () => {
     const {state} = useLocation();
-    console.log(state)
     const date = new Date(state.birthday).toLocaleDateString("en-US");
 
     return (

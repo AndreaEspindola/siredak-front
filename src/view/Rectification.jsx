@@ -1,11 +1,15 @@
 import React from 'react';
-import { Input, Select, Option } from "@material-tailwind/react";
-import { useLocation } from 'react-router-dom';
+import { useContext } from "react";
+import { BackContext } from '../context/BackContext';
+import { Input } from "@material-tailwind/react";
+import { useLocation, useNavigate } from 'react-router-dom';
 import {Formik, Form} from "formik";
 import * as Yup from "yup";
 
 const Rectification = () => {
     const {state} = useLocation();
+    const navigate = useNavigate();
+    const {setActive} = useContext(BackContext);
     console.log(state)
 
     const schema = Yup.object().shape({
@@ -43,10 +47,7 @@ const Rectification = () => {
             string().
             email("Email No Válido").
             required("Este Campo es Obligatorio").
-            nonNullable(),
-        gender: Yup.
-            string().
-            matches(/Hombre|Mujer|Otro/)
+            nonNullable()
     });
 
     return (
@@ -60,15 +61,19 @@ const Rectification = () => {
                     state: state.state,
                     curp: state.curp,
                     cellphone: state.cellphone,
-                    email: state.email,
-                    gender: state.gender,
+                    email: state.email
                 }}
-                onSubmit={(values, {resetForm}) => {
-                    console.log(values);
-                    resetForm();
+                onSubmit={async(values, {resetForm}) => {
+                    await fetch(`https://siredak.herokuapp.com/clients/rectification/client/${state.id_clients}`, {method: "PUT"}).
+                    then(res => res.json()).
+                    then(ans => {
+                        console.log("VALS",values,"RES:", ans);
+                        setActive(prev => !prev);
+                        navigate("../");
+                    })
+
                 }}
                 validationSchema={schema}
-                className=""
                 >
                 {({handleSubmit, handleChange, values, errors, touched}) => {
                     return(
@@ -156,16 +161,6 @@ const Rectification = () => {
                                 value={values.email}
                                 error={errors.email && touched.email? true : false}
                             />
-                            <Select
-                                name="gender"
-                                label="Género"
-                                value={values.gender}
-                                onChange={handleChange}
-                            >
-                                <Option value="0">Hombre</Option>
-                                <Option value="1">Mujer</Option>
-                                <Option value="2">Otro</Option>
-                            </Select>
                             <div className="w-full h-fit mt-5 flex justify-end">
                                 <button
                                     type="submit"
