@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { BackContext } from "../context/BackContext";
 import { Card, Typography } from "@material-tailwind/react";
 import { IconButton, Menu, MenuHandler, MenuItem, MenuList } from "@material-tailwind/react";
@@ -7,14 +7,13 @@ import { useNavigate } from "react-router-dom";
 import Loader from "./loaders/Loader";
 
 const TABLE_HEAD = ["ID Usuario", "E-Mail", "Nombre", "Apellido Paterno", "CURP", "Celular", "Nacionalidad", "Estado", "Género", "ARCO"];
-const TABLE_ROWS = 0
- 
+const TABLE_ROWS = 0;
+
 const Table = ({data}) => {
     // Este hook es de react-router. Sirve para cambiar la dirección de la barra de navegación.
     // Tiene la sintaxis de: navigate("/Dirección-a-la-que-se-quiere-navegar");
     const navigate = useNavigate();
     const {setActive} = useContext(BackContext);
-    const [msg, setMsg] = useState(null);
 
     const getGender = (gender) => {
         const map = new Map([
@@ -25,7 +24,7 @@ const Table = ({data}) => {
 
         return map.get(gender);
     }
-    console.log(data)
+
     return (
         <>
             {data? (
@@ -109,7 +108,7 @@ const Table = ({data}) => {
                                     <MenuList>
                                         <MenuItem onClick={() => {navigate("/access", {state: {name, lastName, email, cellphone, nationality, state, curp, gender, id_clients, birthday}}); setActive(true)}}>Acceso</MenuItem>
                                         <MenuItem onClick={() => {navigate("/rectification"); setActive(true)}}>Rectificación</MenuItem>
-                                        <MenuItem onClick={async() => {await fetch(`https://siredak.herokuapp.com/clients/${id_clients}`, {method: "DELETE"}).then(res => res.json()).then(dat => {setMsg(dat);console.log(msg)})}}>Cancelación</MenuItem>
+                                        <MenuItem onClick={async() => await fetch(`https://siredak.herokuapp.com/clients/${id_clients}`, {method: "DELETE"})}>Cancelación</MenuItem>
                                         <MenuItem>Oposición</MenuItem>
                                     </MenuList>
                                 </Menu>

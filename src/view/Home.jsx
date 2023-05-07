@@ -1,17 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useContext} from 'react';
+import { BackContext } from '../context/BackContext';
 import Table from '../components/Table';
 
 const Home = () => {
     // Este es un hook que regresa dos valores, una variable y una función setter para cambiar
     // el valor de la variable. En cuanto el valor de la variable cambia el componente se va a
     // reenderizar.
-    const [data, setData] = useState(null);
+
+    const {searchData, setSearchData} = useContext(BackContext);
 
     useEffect(() => {
         const fetchData = async() => {
             await fetch("https://siredak.herokuapp.com/clients").
             then(res => res.json()).
-            then(res => setData(res.response));
+            then(res => setSearchData(res.response));
         }
 
         fetchData();
@@ -19,7 +21,7 @@ const Home = () => {
 
     return (
         <div className="w-full h-full">
-            <Table data={data}/>
+            <Table data={searchData}/>
         </div>
     );
 }
