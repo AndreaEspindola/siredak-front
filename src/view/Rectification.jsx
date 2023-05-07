@@ -1,9 +1,13 @@
 import React from 'react';
 import { Input, Select, Option } from "@material-tailwind/react";
+import { useLocation } from 'react-router-dom';
 import {Formik, Form} from "formik";
 import * as Yup from "yup";
 
 const Rectification = () => {
+    const {state} = useLocation();
+    console.log(state)
+
     const schema = Yup.object().shape({
         name: Yup.
             string().
@@ -40,26 +44,24 @@ const Rectification = () => {
             email("Email No Válido").
             required("Este Campo es Obligatorio").
             nonNullable(),
-        address: Yup.
+        gender: Yup.
             string().
-            nonNullable().
-            required("Este Campo es Obligatorio")
+            matches(/Hombre|Mujer|Otro/)
     });
 
     return (
         <div className="w-1/2 h-fit mx-auto right-auto p-2 rounded-md bg-gray-100 mt-10 shadow-xl">
             <Formik
                 initialValues={{
-                    name: "",
-                    lastName: "",
-                    birthday: "",
-                    nationality: "",
-                    state: "",
-                    curp: "",
-                    cellphone: "",
-                    email: "",
-                    gender: "",
-                    address: ""
+                    name: state.name,
+                    lastName: state.lastName,
+                    birthday: state.birthday,
+                    nationality: state.nationality,
+                    state: state.state,
+                    curp: state.curp,
+                    cellphone: state.cellphone,
+                    email: state.email,
+                    gender: state.gender,
                 }}
                 onSubmit={(values, {resetForm}) => {
                     console.log(values);
@@ -155,27 +157,15 @@ const Rectification = () => {
                                 error={errors.email && touched.email? true : false}
                             />
                             <Select
-                                id="gender"
                                 name="gender"
                                 label="Género"
-                                className=""
                                 value={values.gender}
-                                error={errors.gender && touched.gender? true : false}
-                            >
-                                <Option>Hombre</Option>
-                                <Option>Mujer</Option>
-                                <Option>Otro</Option>
-                            </Select>
-                            <Input
-                                id="address"
-                                name="address"
-                                type="text"
-                                label="Direción"
-                                className=""
                                 onChange={handleChange}
-                                value={values.address}
-                                error={errors.address && touched.address? true : false}
-                            />
+                            >
+                                <Option value="0">Hombre</Option>
+                                <Option value="1">Mujer</Option>
+                                <Option value="2">Otro</Option>
+                            </Select>
                             <div className="w-full h-fit mt-5 flex justify-end">
                                 <button
                                     type="submit"

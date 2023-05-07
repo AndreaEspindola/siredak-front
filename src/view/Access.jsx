@@ -1,4 +1,3 @@
-import{useState, useEffect} from "react";
 import {useLocation} from "react-router-dom";
 
 const ReportBtn = () => {    
@@ -12,7 +11,6 @@ const ReportBtn = () => {
 }
 
 const Access = () => {
-    const [data, setData] = useState(null);
     const {state} = useLocation();
     console.log(state)
     const date = new Date(state.birthday).toLocaleDateString("en-US");

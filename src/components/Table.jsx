@@ -25,6 +25,13 @@ const Table = ({data}) => {
         return map.get(gender);
     }
 
+    const handleRectification = (data) => {
+        navigate("/rectification", {state: data});
+        setActive(true);
+    }
+
+    const handleCancel = async(client) => await fetch(`https://siredak.herokuapp.com/clients/${client}`, {method: "DELETE"});
+
     return (
         <>
             {data? (
@@ -107,8 +114,8 @@ const Table = ({data}) => {
                                     </MenuHandler>
                                     <MenuList>
                                         <MenuItem onClick={() => {navigate("/access", {state: {name, lastName, email, cellphone, nationality, state, curp, gender, id_clients, birthday}}); setActive(true)}}>Acceso</MenuItem>
-                                        <MenuItem onClick={() => {navigate("/rectification"); setActive(true)}}>Rectificación</MenuItem>
-                                        <MenuItem onClick={async() => await fetch(`https://siredak.herokuapp.com/clients/${id_clients}`, {method: "DELETE"})}>Cancelación</MenuItem>
+                                        <MenuItem onClick={() => handleRectification({name, lastName, email, cellphone, nationality, state, curp, gender, id_clients, birthday})}>Rectificación</MenuItem>
+                                        <MenuItem onClick={() => handleCancel(id_clients)}>Cancelación</MenuItem>
                                         <MenuItem>Oposición</MenuItem>
                                     </MenuList>
                                 </Menu>

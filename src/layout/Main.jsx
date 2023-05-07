@@ -8,7 +8,7 @@ const Main = () => {
     const {active} = useContext(BackContext);
 
     return (
-        <div className="w-full h-screen bg-green">
+        <div className="w-full h-fit bg-green">
             <Header/>
             {active ? (<BackBtn/>) : null}
             <div>
