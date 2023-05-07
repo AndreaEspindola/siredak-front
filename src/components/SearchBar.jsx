@@ -9,9 +9,14 @@ const SearchBar = () => {
         e.preventDefault();
 
         const email = e.target.firstChild.value;
-        await fetch(`https://siredak.herokuapp.com/clients/certifications/${email}/0`).
-        then(res => res.json()).
-        then(({response}) => {setSearchData(response);console.log(searchData," || ", response)});
+        (email !== ""? 
+            await fetch(`https://siredak.herokuapp.com/clients/certifications/${email}/0`).
+            then(res => res.json()).
+            then(({response}) => {setSearchData(response);console.log(searchData," || ", response)}) 
+                : 
+            await fetch(`https://siredak.herokuapp.com/clients`).
+            then(res => res.json()).
+            then(({response}) => {setSearchData(response);console.log(searchData," || ", response)}));
     }
 
     return (
